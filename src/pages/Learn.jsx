@@ -1,8 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Home, Book, Medal, User, MoreHorizontal, Zap } from 'lucide-react';
 
 export default function Learn() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const lang = queryParams.get('lang') || 'Spanish';
+  const flag = queryParams.get('flag') || '🇪🇸';
+
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
       
@@ -39,7 +44,7 @@ export default function Learn() {
           borderBottom: '2px solid var(--border-gray)',
           gap: '30px'
         }}>
-          <StatBadge icon="🇪🇸" text="Course" />
+          <StatBadge icon={flag} text={lang} />
           <StatBadge icon="🔥" text="12" color="#FF9600" />
           <StatBadge icon="💎" text="450" color="#1CB0F6" />
           <StatBadge icon="❤️" text="5" color="#FF4B4B" />

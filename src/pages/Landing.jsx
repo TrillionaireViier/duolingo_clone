@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const languages = [
   { name: 'Spanish', flag: '🇪🇸' }, { name: 'French', flag: '🇫🇷' }, { name: 'Japanese', flag: '🇯🇵' },
@@ -15,6 +15,19 @@ const languages = [
 ];
 
 export default function Landing() {
+  const [modalType, setModalType] = useState(null); // 'login' or 'signup'
+  const navigate = useNavigate();
+
+  const handleLanguageClick = (lang) => {
+    navigate(`/learn?lang=${lang.name}&flag=${lang.flag}`);
+  };
+
+  const handleAuthSubmit = (e) => {
+    e.preventDefault();
+    setModalType(null);
+    navigate('/learn?lang=Spanish&flag=🇪🇸'); // Default fallback
+  };
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
@@ -57,8 +70,8 @@ export default function Landing() {
               The free, fun, and effective way to learn a language!
             </h1>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', maxWidth: '330px', margin: '0 auto' }}>
-              <Link to="/learn" className="btn btn-primary">Get started</Link>
-              <Link to="/learn" className="btn btn-outline">I already have an account</Link>
+              <button className="btn btn-primary" onClick={() => setModalType('signup')}>Get started</button>
+              <button className="btn btn-outline" onClick={() => setModalType('login')}>I already have an account</button>
             </div>
           </div>
           
@@ -77,7 +90,9 @@ export default function Landing() {
           gap: '20px'
         }}>
           {languages.map((lang, index) => (
-            <div key={index} style={{ 
+            <div key={index} 
+            onClick={() => handleLanguageClick(lang)}
+            style={{ 
               display: 'flex', 
               alignItems: 'center', 
               gap: '10px',
@@ -95,6 +110,40 @@ export default function Landing() {
           ))}
         </div>
       </div>
+
+      {/* Auth Modals */}
+      {modalType && (
+        <div className="modal-backdrop" onClick={() => setModalType(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setModalType(null)}>✕</button>
+            <h2 style={{ color: 'var(--text-dark)', fontWeight: '800' }}>
+              {modalType === 'login' ? 'Log in' : 'Create your profile'}
+            </h2>
+            
+            <form className="auth-form" onSubmit={handleAuthSubmit}>
+              {modalType === 'signup' && (
+                <input type="text" placeholder="Age" className="auth-input" required />
+              )}
+              {modalType === 'signup' && (
+                <input type="text" placeholder="Name (optional)" className="auth-input" />
+              )}
+              <input type="email" placeholder="Email" className="auth-input" required />
+              <input type="password" placeholder="Password" className="auth-input" required />
+              
+              <button type="submit" className="btn btn-primary" style={{ marginTop: '10px', width: '100%' }}>
+                {modalType === 'login' ? 'Log in' : 'Create account'}
+              </button>
+            </form>
+
+            <div className="auth-switch">
+              {modalType === 'login' ? "Don't have an account? " : "Already have an account? "}
+              <span onClick={() => setModalType(modalType === 'login' ? 'signup' : 'login')}>
+                {modalType === 'login' ? 'Sign up' : 'Log in'}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

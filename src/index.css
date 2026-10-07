@@ -72,3 +72,74 @@ body {
   margin: 0 auto;
   padding: 0 20px;
 }
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-light);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: 2px solid var(--border-gray);
+  background: var(--bg-gray);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: var(--secondary-blue);
+  background: white;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--text-light);
+  font-weight: 700;
+}
+
+.auth-switch span {
+  color: var(--secondary-blue);
+  cursor: pointer;
+  text-transform: uppercase;
+}
