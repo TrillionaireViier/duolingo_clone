@@ -8,6 +8,14 @@ export default function Learn() {
   const lang = queryParams.get('lang') || 'Spanish';
   const flag = queryParams.get('flag') || '🇪🇸';
 
+  const unitColors = [
+    'var(--primary-green)',
+    'var(--secondary-blue)',
+    '#CE82FF', // Purple
+    '#FF9600', // Orange
+    '#FF4B4B'  // Red
+  ];
+
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
       
@@ -53,33 +61,39 @@ export default function Learn() {
         {/* Path / Map */}
         <div style={{ maxWidth: '600px', margin: '40px auto', display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'center' }}>
           
-          <div style={{
-            background: 'var(--primary-green)',
-            color: 'white',
-            padding: '20px',
-            borderRadius: '16px',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '20px'
-          }}>
-            <div>
-              <h2 style={{ fontSize: '22px', marginBottom: '5px' }}>Unit 1</h2>
-              <p style={{ fontSize: '15px' }}>Form basic sentences, greet people</p>
-            </div>
-            <Link to="/" className="btn" style={{ background: 'white', color: 'var(--primary-green)' }}>Guidebook</Link>
-          </div>
+          {Array.from({ length: 90 }).map((_, i) => {
+            const unitNumber = i + 1;
+            const bgColor = unitColors[i % unitColors.length];
+            return (
+              <div key={unitNumber} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'center', marginBottom: '40px' }}>
+                <div style={{
+                  background: bgColor,
+                  color: 'white',
+                  padding: '20px',
+                  borderRadius: '16px',
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}>
+                  <div>
+                    <h2 style={{ fontSize: '22px', marginBottom: '5px' }}>Unit {unitNumber}</h2>
+                    <p style={{ fontSize: '15px' }}>Form basic sentences, greet people in {lang}</p>
+                  </div>
+                  <Link to="/" className="btn" style={{ background: 'white', color: bgColor }}>Guidebook</Link>
+                </div>
 
-          {/* Nodes */}
-          <LessonNode icon={<Zap fill="white" />} active={true} offset={0} />
-          <LessonNode icon={<Zap />} offset={-40} />
-          <LessonNode icon={<Zap />} offset={-60} />
-          <LessonNode icon={<Book />} offset={-30} />
-          <LessonNode icon={<Zap />} offset={20} />
-          <LessonNode icon={<Zap />} offset={50} />
-          <LessonNode icon={<Book />} offset={10} />
-
+                {/* Nodes pattern per unit */}
+                <LessonNode icon={<Zap fill={i === 0 ? "white" : "transparent"} />} active={i === 0} offset={0} color={bgColor} />
+                <LessonNode icon={<Zap />} offset={-40} color={bgColor} />
+                <LessonNode icon={<Zap />} offset={-60} color={bgColor} />
+                <LessonNode icon={<Book />} offset={-30} color={bgColor} />
+                <LessonNode icon={<Zap />} offset={20} color={bgColor} />
+                <LessonNode icon={<Zap />} offset={50} color={bgColor} />
+                <LessonNode icon={<Book />} offset={10} color={bgColor} />
+              </div>
+            );
+          })}
         </div>
       </main>
     </div>
@@ -118,7 +132,10 @@ function StatBadge({ icon, text, color = 'var(--text-light)' }) {
   );
 }
 
-function LessonNode({ icon, active, offset }) {
+function LessonNode({ icon, active, offset, color = 'var(--primary-green)' }) {
+  // We approximate a shadow color by just using the base color or a generic shadow if inactive
+  const shadowColor = active ? 'rgba(0,0,0,0.2)' : '#D4D4D4';
+  
   return (
     <div style={{ 
       transform: `translateX(${offset}px)`,
@@ -128,8 +145,8 @@ function LessonNode({ icon, active, offset }) {
         width: '70px',
         height: '70px',
         borderRadius: '50%',
-        backgroundColor: active ? 'var(--primary-green)' : 'var(--border-gray)',
-        boxShadow: active ? '0 8px 0 var(--primary-green-shadow)' : '0 8px 0 #D4D4D4',
+        backgroundColor: active ? color : 'var(--border-gray)',
+        boxShadow: `0 8px 0 ${shadowColor}`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -143,7 +160,7 @@ function LessonNode({ icon, active, offset }) {
       }}
       onMouseUp={(e) => {
         e.currentTarget.style.transform = 'none';
-        e.currentTarget.style.boxShadow = active ? '0 8px 0 var(--primary-green-shadow)' : '0 8px 0 #D4D4D4';
+        e.currentTarget.style.boxShadow = `0 8px 0 ${shadowColor}`;
       }}
       >
         {icon}
