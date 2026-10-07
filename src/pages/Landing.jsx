@@ -144,6 +144,66 @@ export default function Landing() {
           </div>
         </div>
       )}
+
+      {/* Footer Section */}
+      <footer style={{
+        backgroundColor: 'var(--bg-gray)',
+        padding: '50px 40px',
+        borderTop: '2px solid var(--border-gray)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '40px'
+      }}>
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '60px',
+          justifyContent: 'center',
+          maxWidth: '1000px',
+          width: '100%'
+        }}>
+          <div style={{ flex: '1 1 200px' }}>
+            <h3 style={{ color: 'var(--text-light)', marginBottom: '15px', fontSize: '18px', textTransform: 'uppercase' }}>About Us</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>Our Team</Link>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>Careers</Link>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>Investors</Link>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>Blog</Link>
+            </div>
+          </div>
+          
+          <div style={{ flex: '1 1 200px' }}>
+            <h3 style={{ color: 'var(--text-light)', marginBottom: '15px', fontSize: '18px', textTransform: 'uppercase' }}>Products</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>Giraffolingo</Link>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>Schools</Link>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>Business</Link>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>Podcasts</Link>
+            </div>
+          </div>
+
+          <div style={{ flex: '1 1 200px' }}>
+            <h3 style={{ color: 'var(--text-light)', marginBottom: '15px', fontSize: '18px', textTransform: 'uppercase' }}>Help & Support</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>FAQ</Link>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>Privacy Policy</Link>
+              <Link to="/" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: '700' }}>Terms</Link>
+            </div>
+          </div>
+        </div>
+        
+        <div style={{
+          width: '100%',
+          borderTop: '2px solid var(--border-gray)',
+          paddingTop: '20px',
+          textAlign: 'center',
+          color: 'var(--text-light)',
+          fontWeight: '700'
+        }}>
+          © 2026 Giraffolingo Inc. All Rights Reserved.
+        </div>
+      </footer>
     </div>
   );
 }
