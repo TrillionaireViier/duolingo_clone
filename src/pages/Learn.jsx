@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Book, Medal, User, MoreHorizontal, Zap } from 'lucide-react';
+import { Home, Book, Medal, User, MoreHorizontal, Zap, X } from 'lucide-react';
 
 export default function Learn() {
+  const [guidebookUnit, setGuidebookUnit] = useState(null);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const lang = queryParams.get('lang') || 'Spanish';
@@ -80,7 +81,13 @@ export default function Learn() {
                     <h2 style={{ fontSize: '22px', marginBottom: '5px' }}>Unit {unitNumber}</h2>
                     <p style={{ fontSize: '15px' }}>Form basic sentences, greet people in {lang}</p>
                   </div>
-                  <Link to="/" className="btn" style={{ background: 'white', color: bgColor }}>Guidebook</Link>
+                  <button 
+                    className="btn" 
+                    onClick={() => setGuidebookUnit(unitNumber)}
+                    style={{ background: 'white', color: bgColor }}
+                  >
+                    Guidebook
+                  </button>
                 </div>
 
                 {/* Nodes pattern per unit */}
@@ -96,6 +103,45 @@ export default function Learn() {
           })}
         </div>
       </main>
+
+      {/* Guidebook Modal */}
+      {guidebookUnit && (
+        <div className="modal-backdrop" onClick={() => setGuidebookUnit(null)}>
+          <div className="modal-content" style={{ maxWidth: '600px', textAlign: 'left', padding: '40px' }} onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setGuidebookUnit(null)}>
+              <X size={24} />
+            </button>
+            <h2 style={{ color: 'var(--text-dark)', fontWeight: '800', marginBottom: '20px', fontSize: '28px' }}>
+              {lang} Guidebook - Unit {guidebookUnit}
+            </h2>
+            
+            <div style={{ background: 'var(--bg-gray)', padding: '20px', borderRadius: '16px', marginBottom: '20px' }}>
+              <h3 style={{ color: 'var(--primary-green)', marginBottom: '10px' }}>Key Phrases</h3>
+              <p style={{ fontSize: '16px', lineHeight: '1.6', color: 'var(--text-dark)' }}>
+                <strong>Hello:</strong> {lang === 'French' ? 'Bonjour' : lang === 'Spanish' ? 'Hola' : lang === 'Japanese' ? 'Konnichiwa' : 'Hello'} <br />
+                <strong>Thank you:</strong> {lang === 'French' ? 'Merci' : lang === 'Spanish' ? 'Gracias' : lang === 'Japanese' ? 'Arigatou' : 'Thank you'} <br />
+                <strong>Goodbye:</strong> {lang === 'French' ? 'Au revoir' : lang === 'Spanish' ? 'Adiós' : lang === 'Japanese' ? 'Sayounara' : 'Goodbye'}
+              </p>
+            </div>
+
+            <div style={{ background: 'var(--bg-gray)', padding: '20px', borderRadius: '16px' }}>
+              <h3 style={{ color: 'var(--secondary-blue)', marginBottom: '10px' }}>Grammar Rules</h3>
+              <p style={{ fontSize: '16px', lineHeight: '1.6', color: 'var(--text-dark)' }}>
+                In this unit, you will learn the basics of {lang} sentence structure. 
+                Pay attention to noun genders and verb conjugations! Remember to practice daily to retain these grammar foundations.
+              </p>
+            </div>
+            
+            <button 
+              className="btn btn-primary" 
+              onClick={() => setGuidebookUnit(null)}
+              style={{ marginTop: '30px', width: '100%' }}
+            >
+              Got it!
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
